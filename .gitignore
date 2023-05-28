@@ -1,0 +1,15 @@
+.DS_Store
+.ipynb_checkpoints/
+venv/
+*.pdf
+*.pptx
+*.docx
+*.xlsx
+*.zip
+*.Rhistory
+*.jpg
+*.png
+log/
+Module*/
+coffee-shop-sim/
+Course Overview/
