@@ -93,10 +93,10 @@ We tested three different mean arrival times for customers: 0.5 minutes, 1 minut
 
 The call center simulation project lays the foundation for further research and enhancements. Some potential areas for future work include:
 
-- Optimization: Apply optimization techniques to determine the optimal number of employees, support time, and other parameters to maximize call center performance.
-- Real-time simulation: Develop a real-time simulation framework to evaluate call center performance under dynamic conditions and changing customer arrival patterns.
-- Machine learning integration: Explore the integration of machine learning algorithms to predict call volumes, customer behavior, and optimize call center resource allocation.
-- Sensitivity analysis: Conduct sensitivity analysis to assess the impact of changing parameters on KPIs and identify the most influential factors.
+- **Optimization:** Apply optimization techniques to determine the optimal number of employees, support time, and other parameters to maximize call center performance.
+- **Real-time simulation:** Develop a real-time simulation framework to evaluate call center performance under dynamic conditions and changing customer arrival patterns.
+- **Machine learning integration:** Explore the integration of machine learning algorithms to predict call volumes, customer behavior, and optimize call center resource allocation.
+- **Sensitivity analysis:** Conduct sensitivity analysis to assess the impact of changing parameters on KPIs and identify the most influential factors.
 
 By addressing these future works, the project can further enhance the accuracy and practicality of the call center simulation model.
 
