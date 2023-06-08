@@ -8,6 +8,7 @@ venv/
 *.zip
 *.Rhistory
 *.jpg
+!img/*.jpg
 *.png
 log/
 Module*/
