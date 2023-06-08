@@ -176,114 +176,115 @@ def setup(
         customer_total += 1
 
 
-kpi_lst = []
-logs_columns = [
-    "parameters",
-    "simulationID",
-    "caseID",
-    "status",
-    "timestamp",
-    "queue_time",
-    "call_time",
-]
-for customer_per_min in tqdm(
-    CUSTOMER_PER_MIN_RATE_LST, total=len(CUSTOMER_PER_MIN_RATE_LST)
-):
-    customer_interval = 1 / customer_per_min
-    for num_employees in NUM_EMPLOYEES_RANGE:
-        params_lst = [
-            num_employees,
-            customer_per_min,
-            SIMULATION_TIME,
-            SIMULATION_REPEAT,
-            AVG_SUPPORT_TIME,
-            AVG_SUPPORT_TIME_STD,
-            SLA_TIME_THRESHOLD,
-            AVG_DROP_TIME_THRESHOLD,
-            AVG_DROP_TIME_THRESHOLD_STD,
-        ]
-        params_lst = [str(param).zfill(2) for param in params_lst]
-        params_id = "-".join(params_lst)
-        param_log_lst = []
-        for simulation in range(SIMULATION_REPEAT):
-            logs_lst = []
-            customer_total = 0
-            customer_handled = 0
-            no_sla_total = 0
-            drop_total = 0
-            sim_id = str(simulation + 1)
-            env = simpy.Environment()
-            env.process(
-                setup(
-                    env,
-                    num_employees,
-                    AVG_SUPPORT_TIME,
-                    AVG_SUPPORT_TIME_STD,
-                    customer_interval,
-                    params_id,
-                    sim_id,
+if __name__ == "__main__":
+    kpi_lst = []
+    logs_columns = [
+        "parameters",
+        "simulationID",
+        "caseID",
+        "status",
+        "timestamp",
+        "queue_time",
+        "call_time",
+    ]
+    for customer_per_min in tqdm(
+        CUSTOMER_PER_MIN_RATE_LST, total=len(CUSTOMER_PER_MIN_RATE_LST)
+    ):
+        customer_interval = 1 / customer_per_min
+        for num_employees in NUM_EMPLOYEES_RANGE:
+            params_lst = [
+                num_employees,
+                customer_per_min,
+                SIMULATION_TIME,
+                SIMULATION_REPEAT,
+                AVG_SUPPORT_TIME,
+                AVG_SUPPORT_TIME_STD,
+                SLA_TIME_THRESHOLD,
+                AVG_DROP_TIME_THRESHOLD,
+                AVG_DROP_TIME_THRESHOLD_STD,
+            ]
+            params_lst = [str(param).zfill(2) for param in params_lst]
+            params_id = "-".join(params_lst)
+            param_log_lst = []
+            for simulation in range(SIMULATION_REPEAT):
+                logs_lst = []
+                customer_total = 0
+                customer_handled = 0
+                no_sla_total = 0
+                drop_total = 0
+                sim_id = str(simulation + 1)
+                env = simpy.Environment()
+                env.process(
+                    setup(
+                        env,
+                        num_employees,
+                        AVG_SUPPORT_TIME,
+                        AVG_SUPPORT_TIME_STD,
+                        customer_interval,
+                        params_id,
+                        sim_id,
+                    )
                 )
-            )
-            env.run(until=SIMULATION_TIME)
+                env.run(until=SIMULATION_TIME)
 
-            # Calculate KPIs
-            log_df = pd.DataFrame(logs_lst, columns=logs_columns)
-            param_log_lst.extend(logs_lst)
-            total_not_traced = customer_total - (customer_handled + drop_total)
-            customer_total_traced = customer_total - total_not_traced
-            avg_queue_time = log_df["queue_time"].mean()
-            avg_call_time = log_df["call_time"].mean()
-            avg_drop_time = log_df.loc[
-                (log_df["status"] == "Dropped"), "queue_time"
-            ].mean()
-            no_sla_ratio = no_sla_total / customer_handled
-            drop_ratio = drop_total / customer_total_traced
-            kpi_lst.append(
-                [
-                    params_id,
-                    sim_id,
-                    customer_total,
-                    customer_total_traced,
-                    total_not_traced,
-                    customer_handled,
-                    no_sla_total,
-                    drop_total,
-                    avg_queue_time,
-                    avg_call_time,
-                    avg_drop_time,
-                    no_sla_ratio,
-                    drop_ratio,
-                ]
-            )
-        param_log_df = pd.DataFrame(param_log_lst, columns=logs_columns)
-        log_file_path = log_path + f"{params_id}.txt"
-        os.makedirs(log_path, exist_ok=True)
-        with open(log_file_path, "w") as f:
-            param_log_string = param_log_df.to_string(index=False)
-            f.write(param_log_string)
-kpi_columns = [
-    "parameters",
-    "simulationID",
-    "total",
-    "total_traced",
-    "total_not_traced",
-    "handled",
-    "handled_no_sla",
-    "dropped",
-    "avg_queue_time",
-    "avg_call_time",
-    "avg_drop_time",
-    "no_sla_ratio",
-    "drop_ratio",
-]
+                # Calculate KPIs
+                log_df = pd.DataFrame(logs_lst, columns=logs_columns)
+                param_log_lst.extend(logs_lst)
+                total_not_traced = customer_total - (customer_handled + drop_total)
+                customer_total_traced = customer_total - total_not_traced
+                avg_queue_time = log_df["queue_time"].mean()
+                avg_call_time = log_df["call_time"].mean()
+                avg_drop_time = log_df.loc[
+                    (log_df["status"] == "Dropped"), "queue_time"
+                ].mean()
+                no_sla_ratio = no_sla_total / customer_handled
+                drop_ratio = drop_total / customer_total_traced
+                kpi_lst.append(
+                    [
+                        params_id,
+                        sim_id,
+                        customer_total,
+                        customer_total_traced,
+                        total_not_traced,
+                        customer_handled,
+                        no_sla_total,
+                        drop_total,
+                        avg_queue_time,
+                        avg_call_time,
+                        avg_drop_time,
+                        no_sla_ratio,
+                        drop_ratio,
+                    ]
+                )
+            param_log_df = pd.DataFrame(param_log_lst, columns=logs_columns)
+            log_file_path = log_path + f"{params_id}.txt"
+            os.makedirs(log_path, exist_ok=True)
+            with open(log_file_path, "w") as f:
+                param_log_string = param_log_df.to_string(index=False)
+                f.write(param_log_string)
+    kpi_columns = [
+        "parameters",
+        "simulationID",
+        "total",
+        "total_traced",
+        "total_not_traced",
+        "handled",
+        "handled_no_sla",
+        "dropped",
+        "avg_queue_time",
+        "avg_call_time",
+        "avg_drop_time",
+        "no_sla_ratio",
+        "drop_ratio",
+    ]
 
-kpi = pd.DataFrame(kpi_lst, columns=kpi_columns)
-kpi_agg = kpi.groupby("parameters")[kpi_columns[2:]].mean().reset_index()
+    kpi = pd.DataFrame(kpi_lst, columns=kpi_columns)
+    kpi_agg = kpi.groupby("parameters")[kpi_columns[2:]].mean().reset_index()
 
-kpi_summary_path = dir_path + f"log-summary.csv"
-kpi_summary_agg_path = dir_path + f"log-summary-average.csv"
-kpi.to_csv(kpi_summary_path, index=False)
-kpi_agg.to_csv(kpi_summary_agg_path, index=False)
-print(f"saved logs to {log_path}")
-print(f"saved log summary to {kpi_summary_path}")
-print(f"saved log summary average to {kpi_summary_agg_path}")
+    kpi_summary_path = dir_path + f"log-summary.csv"
+    kpi_summary_agg_path = dir_path + f"log-summary-average.csv"
+    kpi.to_csv(kpi_summary_path, index=False)
+    kpi_agg.to_csv(kpi_summary_agg_path, index=False)
+    print(f"saved logs to {log_path}")
+    print(f"saved log summary to {kpi_summary_path}")
+    print(f"saved log summary average to {kpi_summary_agg_path}")
