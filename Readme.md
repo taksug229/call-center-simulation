@@ -74,7 +74,7 @@ In drafting this recommendation, the analyst team decides to create a process si
 
 Like in real life, the callers in this problem do not arrive at perfectly consistent nor predictable intervals. Customers entering the queue are modeled via a poisson distribution where callers arrive at mean interval times. We test three mean interval times in this simulation: a caller arriving every 0.5 minutes, every 1 minute, and every 2 minutes. Likewise, not all callers drop out of the waiting queue at the same time; the time that they drop follows a normal distribution with a mean of 15 minutes and a standard deviation of 5 minutes. Additionally, the time for an employee to support a caller follows a normal distribution with a mean of 10 minutes and a standard deviation of 3 minutes. Employees may only service one caller at a time. After finishing servicing one customer, they remove a caller from the front of the queue and service them.
 
---
+---
 
 ## Programming Overview
 The code implements the call center simulation and evaluates KPIs to analyze the call center's performance. The simulation is run with different parameters, including the number of employees and customer arrival rates. There are 30 different parameters since there are 3 different arrival rates with 10 different numbers of employees. For each parameter, the simulation is run for 8 hours 30 times. It tracks metrics such as the total number of customers, handled and dropped calls, average queue and call times, and drop ratio. The simulation results are saved in log files, and summary statistics are calculated and stored in CSV files. This approach enables a comprehensive assessment of the call center's efficiency and provides insights for optimizing its operations.
