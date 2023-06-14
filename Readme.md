@@ -42,7 +42,7 @@ python call_center_simulation.py
 
 ## Abstract
 
-Process simulations have a variety of applications ranging across science, mathematics, and business. Businesses in particular establish protocol in servicing consumers and thus have predictable and reproducible behaviors that may be replicated via simulation. This project explores the scenario of a call center whose key performance metric is the percentage of calls dropped by customers due to late service times. We examine the minimum number of employees a call center must hire to lower this key performance metric to.
+Process simulations have a variety of applications ranging across science, mathematics, and business. Businesses in particular establish protocol in servicing consumers and thus have predictable and reproducible behaviors that may be replicated via simulation. This project explores the scenario of a call center whose key performance metric is the percentage of calls dropped by customers due to late service times. I examined the minimum number of employees a call center must hire to lower this key performance metric to.
 
 ---
 
@@ -56,8 +56,8 @@ The simulation requires the following inputs:
 | Average support time | average time taken to resolve a customer issue |
 | Average support time standard deviation | variability in support time |
 | Customers per minute | average customers per minute following a Poisson distribution |
-| SLA time threshold  | wait time we ideally want to pick up the phone |
-| Customer dropout time threshold | maximum time a customer is willing to wait before abandoning the call |
+| SLA time threshold  | ideal wait time threshold to pick up the phone |
+| Customer dropout time threshold | wait time a customer is willing to tolerate before dropping out |
 | Customer dropout time standard deviation | variability in customer dropout time |
 
 
@@ -77,7 +77,7 @@ The overall flow for the call center can be illustrated in Fig 1.
 **Fig 1.** Call Center Flow
 ![Flow](img/call-center-flow.png)
 
-Like in real life, the callers in this problem do not arrive at perfectly consistent nor predictable intervals. Customers entering the queue are modeled via a poisson distribution where the mean number of callers arrive per minute. We test three different mean calls per minute in this simulation: 0.5 caller per minute, 1 caller per minute, and 2 callers per minute. Likewise, not all callers drop out of the waiting queue at the same time; the time that they drop follows a normal distribution with a mean of 15 minutes and a standard deviation of 5 minutes. Additionally, the time for an employee to support a caller follows a normal distribution with a mean of 10 minutes and a standard deviation of 3 minutes. Employees may only service one caller at a time. After finishing servicing one customer, they remove a caller from the front of the queue and service them.
+Like in real life, the callers in this problem do not arrive at perfectly consistent nor predictable intervals. Customers entering the queue are modeled via a poisson distribution where the mean number of callers arrive per minute. I tested three different mean calls per minute in this simulation: 0.5 caller per minute, 1 caller per minute, and 2 callers per minute. Likewise, not all callers drop out of the waiting queue at the same time; the time that they drop follows a normal distribution with a mean of 15 minutes and a standard deviation of 5 minutes. Additionally, the time for an employee to support a caller follows a normal distribution with a mean of 10 minutes and a standard deviation of 3 minutes. Employees may only service one caller at a time. After finishing servicing one customer, they remove a caller from the front of the queue and service them.
 
 ---
 
