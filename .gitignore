@@ -10,6 +10,7 @@ venv/
 *.jpg
 !img/*.jpg
 *.png
+!img/*.png
 log/
 Module*/
 coffee-shop-sim/
