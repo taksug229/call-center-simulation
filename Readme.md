@@ -110,6 +110,7 @@ By addressing these future works, the project can further enhance the accuracy a
 ## Built With
 
 * **Software Packages:**  [Python](https://www.python.org/), [Simpy](https://simpy.readthedocs.io/en/latest/), [Numpy](https://numpy.org/), [Pandas](https://pandas.pydata.org/docs/)
+* Inspired by [NeuralNine](https://youtu.be/8SLk_uRRcgc)
 ## Author
 
 * **Takeshi Sugiyama** - *Data Scientist*
