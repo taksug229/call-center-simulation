@@ -11,7 +11,7 @@ Photo by [Pixabay](https://www.pexels.com/photo/gray-wooden-computer-cubicles-in
 ## Setup steps
 
 ```
-python -m venv
+python -m venv venv
 
 souce venv/bin/activate
 
