@@ -4,7 +4,7 @@ import pandas as pd
 import simpy
 from tqdm import tqdm
 
-dir_path = os.getcwd() + "/"
+dir_path = os.path.dirname(os.path.realpath(__file__))
 log_path = dir_path + "log/"
 
 np.random.seed(420)
