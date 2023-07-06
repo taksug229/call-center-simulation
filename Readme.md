@@ -92,7 +92,7 @@ We tested three different mean number of customers per minute: 0.5 customer, 1 c
 
 | Mean Number of Customers Per Minute | Recommended Employees to Hire  |
 | ----------------------------- | -----------------------------: |
-| 0.5 customer                   | 1                             |
+| 0.5 customer                   | 6                             |
 | 1 customer                      | 12                             |
 | 2 customers                     | 18                              |
 
